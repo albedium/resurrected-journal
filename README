@@ -1,0 +1,32 @@
+Resurrected-Journal is a Java application for use in connection with jbackup.pl
+(https://github.com/rnewman57/jbackup). It takes the XML file created
+by Jbackup and turns it into a collection of HTML pages, index.html
+plus one page per post. Sorry about the mixing of Perl and Java,
+but if you can get a Perl app to run, the Java part is easy after
+that. :)
+
+Resurrected-Journal requires Java 1.6 or higher, and the instructions
+below assume you can run Java from the command line.
+
+The current version is extremely crude, simply a first effort at
+getting something up on Github and a proof of concept. Before long
+there should be a version that uses CSS styling, so you can control
+the appearance of your posts by editing the CSS file.
+
+Bugs that actually stop the application from running should be
+reported. For anything beyond that, please be patient.
+
+To run jbackup, enter something like this in your command line shell:
+
+perl jbackup.pl --sync --user={your LJ user name} --pass={your LJ password} \
+[--journal={LJ community name}] --dump=xml \
+--file={source-dir}/{journal or community name}.xml
+
+On Windows it should work about the same, except that paths will look different
+and you can't use backslash as a line continuation.
+
+Once you've run that successfully, run Resurrected-Journal with a command
+line similar to the following:
+
+java -jar resurrectedjournal.jar -s {source-dir}/{journal or community name}.xml \
+-d {dest-dir} -t "Archive Title"
