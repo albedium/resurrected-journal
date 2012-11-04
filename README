@@ -16,6 +16,10 @@ the appearance of your posts by editing the CSS file.
 Bugs that actually stop the application from running should be
 reported. For anything beyond that, please be patient.
 
+The needed jar file is bin/resurrectedjournal.jar in the checkout code. 
+Until it becomes a little more stable, I'm not tempting casual users by
+making the jar separately downloadable.
+
 To run jbackup, enter something like this in your command line shell:
 
 perl jbackup.pl --sync --user={your LJ user name} --pass={your LJ password} \
