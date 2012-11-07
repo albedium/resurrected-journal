@@ -1,0 +1,15 @@
+body  {background-color: #DDEEEE; font-family: serif; }
+.user {color: #000099; font-style:italic; }
+.postsubj {font-size: 16pt; font-weight: bold; color: #002266;}
+.postdate {font-size: 12pt; font-style:italic; font-family: sans-serif;}
+.postbody {font-size: 12pt;}
+.comments {}
+.comment {}
+.commentslabel {font-size: 15pt; font-weight: bold; color: #002266;}
+.cmtsubj {font-size: 14pt; font-weight: bold; color: #002266;}
+.cmtcredit {font-size: 12pt; font-family: sans-serif;}
+.cmtbody {font-size: 12pt;}
+table.footer {border: none;}
+td.footer {width: 200pt;}
+.fill1 {font-size: 24pt;}
+.fill2 {font-size: 18pt;}
