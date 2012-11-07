@@ -19,23 +19,24 @@
   <property name="test" location="test"/>
   <property name="classpath" location="lib/*.jar"/>
   <property name="doc"     location="doc"/>
+  <property name="javadoc" location="${doc}/javadoc"/>
   <property name="root" location="."/>
 
   <patternset id="properties">
      <include name="**/*.properties"/>
   </patternset>
 
-  <target name="dist" description="Create distribution" depends="rb">
+  <target name="dist" description="Create distribution" depends="rj">
   </target>	
   	
   <!-- Target for resurrected-journal -->
-  <target name="rb" depends="compile">
-    <jar destfile="${bin}/resurrectedjournal.jar"  basedir="${classes}">
+  <target name="rj" depends="compile">
+  	<jar destfile="${bin}/resurrectedjournal.jar"  basedir="${classes}">
         <manifest>
             <attribute name="Built-By" value="Gary McGath"/>
             <attribute name="Main-Class" value="com.mcgath.rj.ResurrectedJournal"/>
             <section name="common">
-               <attribute name="Implementation-Title" value="RegBrowser"/>
+               <attribute name="Implementation-Title" value="ResurrectedJournal"/>
             </section>    
         </manifest>	   
     	<zipfileset src="${lib}/log4j-1.2.17.jar"/>
@@ -68,7 +69,7 @@
   </target>
 
   <target name="javadoc">
-    <javadoc sourcepath="${src}" destdir="${doc}"
+    <javadoc sourcepath="${src}" destdir="${javadoc}"
              windowtitle="Resurrected-Journal Documentation">
       <package name="com.mcgath.rj"/>
     </javadoc>

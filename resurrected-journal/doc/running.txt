@@ -1,0 +1,57 @@
+Resurrected-Journal is a Java application for use in connection with jbackup.pl
+(https://github.com/rnewman57/jbackup). It takes the XML file created
+by Jbackup and turns it into a collection of HTML pages, index.html
+plus one page per post. Sorry about the mixing of Perl and Java,
+but if you can get a Perl app to run, the Java part is easy after
+that. :)
+
+Resurrected-Journal requires Java 1.6 or higher, and the instructions
+below assume you can run Java from the command line.
+
+
+The needed jar file is bin/resurrectedjournal.jar in the checkout code. 
+Until it becomes a little more stable, I'm not tempting casual users by
+making the jar separately downloadable.
+
+To run jbackup, enter something like this in your command line shell:
+
+perl jbackup.pl --sync --user={your LJ user name} --pass={your LJ password} \
+[--journal={LJ community name}] --dump=xml \
+--file={source-dir}/{journal or community name}.xml
+
+On Windows it should work about the same, except that paths will look different
+and you can't use backslash as a line continuation.
+
+Once you've run that successfully, run Resurrected-Journal with a command
+line similar to the following:
+
+java -jar resurrectedjournal.jar -s {source-dir}/{journal or community name}.xml \
+-d {dest-dir} -t "Archive Title"
+
+Parameters:
+-s   Source file
+-d   Destination directory
+-t   Title (optional)
+-ss  CSS stylesheet (optional)
+
+Example:
+
+java -jar resurrectedjournal.jar -s /users/me/lj-dump.xml -d /users/me/ljarchive -t "Archive Title" -ss "mystylesheet.css"
+
+The HTML files will use a default stylesheet if none is specified. You can 
+customize your appearance by specifying your own stylesheet or by replacing
+style.css in your generated archive directory at any later time.
+
+The following are styles you can change to affect the appearance of your posts:
+
+.user (inline usernames using the "lj user=" tag)
+.postsubj (post subject line)
+.postdate (post date line)
+.postbody (post body)
+.comments (comment block)
+.comment (single comment)
+.commentslabel (the "Comments:" label)
+.cmtsubj (comment subject)
+.cmtcredit (line identifying commenter)
+.cmtbody (comment body)
+.footer (footer table )

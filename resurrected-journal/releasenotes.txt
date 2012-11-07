@@ -1,0 +1,3 @@
+ResurrectedJournal Version 1.0dev1, 7-Nov-2012
+
+First numbered developement release.

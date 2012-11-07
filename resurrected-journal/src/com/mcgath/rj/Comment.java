@@ -1,7 +1,45 @@
+/** Resurrected Journal
+ * 
+ * Copyright (c) 2012, Gary McGath
+ * All rights reserved.
+ * 
+ * The developer of this software may be available for enhancements or
+ * related development work. See http://www.garymcgath.com for current status.
+ * 
+ * Licensed under the BSD license:
+ *
+ * Redistribution and use in source and binary forms, with or without modification, 
+ * are permitted provided that the following conditions are met:
+ *
+ *  Redistributions of source code must retain the above copyright notice, this 
+ *  list of conditions and the following disclaimer.
+ *  Redistributions in binary form must reproduce the above copyright notice, 
+ *  this list of conditions and the following disclaimer in the documentation 
+ *  and/or other materials provided with the distribution.
+ *  
+ *  Neither the name of Gary McGath nor the names of contributors 
+ *  may be used to endorse or promote products derived from this software 
+ *  without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+ *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, 
+ *  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR 
+ *  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+ *  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
+ *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
+ *  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+ *  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+ *  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+ *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+ *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 package com.mcgath.rj;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /** A single LJ comment. */
 public class Comment {
@@ -15,6 +53,7 @@ public class Comment {
     private String editTime;
     private String posterIP;
     private boolean autoFormat;
+    private Map<String, String> properties;
     
     private int nestLevel;
     
@@ -34,6 +73,7 @@ public class Comment {
     }
 
     private void init () {
+        properties = new HashMap<String, String> ();
         autoFormat = true;    // default
         replies = new ArrayList<Comment> ();
         nestLevel = 0;
@@ -75,6 +115,14 @@ public class Comment {
         date = s;
     }
     
+    /** 
+     * Add a property. 
+     */
+    public void addProperty (String name, String value) {
+        properties.put(name,  value);
+    }
+    
+
     /** Get the comment's parent. This will be null if it isn't a reply
      *  to another comment. */
     public Comment getParent () {
@@ -91,17 +139,28 @@ public class Comment {
         // TODO barely more than a stub
         // TODO should use CSS rather than header tags
         StringBuffer ret = new StringBuffer ( );
-        ret.append ("<h2>Posted by " + poster + " at " + date + "</h2>");
-        ret.append (body);
+        ret.append ("<div class=\"comment\"" +
+                "style=\"margin-left: " +
+                        Integer.toString (nestLevel * 24) +
+                        "pt\">\n");
+        ret.append ("<span class=\"cmtcredit\">Posted by " + poster + 
+                " at " + date + "</span><br>");
         if (subject != null) {
-            ret.append ("<h2>" + subject + "</h2>\n");
+            ret.append ("<span class=\"cmtsubj\">" + subject + "</span><br>\n");
+        }
+        ret.append ("<div class=\"cmtbody\">" + body + "</div>\n");
+        String ipaddr = properties.get ("poster_ip");
+        if (ipaddr != null) {
+            ret.append ("<br>&nbsp;<br>IP address: " + ipaddr + "<br>\n");
+        }
+        if (!replies.isEmpty ()) {
+            ret.append ("<p class=\"fill2\"></p>\n");
         }
         for (Comment rep : replies) {
             ret.append (rep.toHTML());
         }
-        String divTag = "<div style=\"margin-left: " +
-             Integer.toString (nestLevel * 24) +
-             "pt\">";
-        return divTag + "<p>\n" + ret.toString() + "\n</p></div>\n";
+        ret.append ("<p class=\"fill2\"></p>\n");
+        ret.append ("</div>");      // Close div class comment
+        return ret.toString();
     }
 }
